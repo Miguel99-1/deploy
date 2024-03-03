@@ -1,14 +1,15 @@
 // App.jsx
 import React from "react";
-import { BrowserRouter as  Route, Routes, Navigate} from "react-router-dom";
+import { BrowserRouter as  Router, Routes, Route, Navigate} from "react-router-dom";
 import RegisterPage from "./components/RegisterPage.js";
 import LoginPage from "./components/LoginPage.js";
 import HomePage from "./components/HomePage.js";
 
 
 
-function App() {
+const App = () => {
   return (
+    <Router>
       <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/login" element={<LoginPage />} />
@@ -16,6 +17,7 @@ function App() {
 
       <Route path="*" element={<Navigate to="/login" />} />
       </Routes>
+      </Router>
   );
 }
 
