@@ -1,59 +1,53 @@
-import React, {useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+// Register.js
+import React, { useState } from "react";
+import axios from "axios";
 
-const RegisterPage = ({ onRegister }) => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState(null);
-    const navigate = useNavigate();
-  
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-  
-      try {
-        // Chama a função onRegister passando as credenciais
-        
-        // Redireciona para a página inicial após o registro bem-sucedido
-        navigate('/');
-      } catch (error) {
-        setError(error.message || 'Erro ao registrar');
-      }
-    };
-  
-    return (
-      <div>
-        <h1>Registro</h1>
-        <form onSubmit={handleSubmit}>
-          {error && <p style={{ color: 'red' }}>{error}</p>}
-          <div>
-            <label htmlFor="email">E-mail:</label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="password">Senha:</label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-          <button type="submit">Registrar</button>
-        </form>
-        
-        {/* Adiciona um botão/link para a página de login */}
-        <div>
-          Já tem uma conta? <Link to="/login">Faça login</Link>
-        </div>
-      </div>
-    );
+function RegisterPage() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+
+  const baseUrl = "https://api-register-users-1ype.vercel.app";
+
+  const handleRegister = async () => {
+    if (!name || !email) {
+      return alert("Preencha os campos!");
+    }
+
+    const data = { name, email };
+
+    try {
+      await axios.post(`${baseUrl}/users`, data);
+      alert("Usuário registrado com sucesso!");
+      setName("");
+      setEmail("");
+    } catch (error) {
+      console.error("Erro ao registrar usuário:", error);
+      alert("Erro ao registrar usuário. Por favor, tente novamente mais tarde.");
+    }
   };
-  
-  export default RegisterPage;
+
+  return (
+    <div>
+      <h2>Register</h2>
+      <label>
+        Name:
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+      </label>
+      <label>
+        Email:
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+      </label>
+      <button onClick={handleRegister}>Register</button>
+    </div>
+  );
+}
+
+export default RegisterPage;

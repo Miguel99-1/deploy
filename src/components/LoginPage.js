@@ -1,62 +1,52 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '../services/AuthService';
+// Login.js
+import React, { useState } from "react";
+import axios from "axios";
 
-const LoginPage = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const navigate = useNavigate();
-  const { login } = useAuth();
+function LoginPage() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const handleLogin = async (e) => {
-    e.preventDefault(); // Impedir o envio padrão do formulário
+  const baseUrl = "https://api-register-users-1ype.vercel.app"; // URL da sua API de login
+
+  const handleLogin = async () => {
+    if (!email || !password) {
+      return alert("Preencha todos os campos!");
+    }
+
+    const data = { email, password };
 
     try {
-      // Realizar o login
-      const userData = await login(email, password);
-      
-      // Verificar se o login foi bem-sucedido e redirecionar para a página de players
-      if (userData) {
-        navigate('/players');
-      }
+      const response = await axios.post(`${baseUrl}/login`, data);
+      // Aqui você pode lidar com a resposta da API, como armazenar o token de autenticação, etc.
+      console.log("Login realizado com sucesso!", response.data);
     } catch (error) {
-      console.error(error.message);
+      console.error("Erro ao realizar login:", error);
+      alert("Erro ao realizar login. Verifique suas credenciais e tente novamente.");
     }
   };
 
   return (
     <div>
-      <h1>Login</h1>
-      <form onSubmit={handleLogin}>
-        <div>
-          <label htmlFor="email">E-mail:</label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="password">Senha:</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit">Entrar</button>
-      </form>
-      
-      {/* Adiciona um botão/link para a página de registro */}
-      <div>
-        Não tem uma conta? <Link to="/register">Registre-se</Link>
-      </div>
+      <h2>Login</h2>
+      <label>
+        Email:
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+      </label>
+      <label>
+        Password:
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+      </label>
+      <button onClick={handleLogin}>Login</button>
     </div>
   );
-};
+}
 
 export default LoginPage;
