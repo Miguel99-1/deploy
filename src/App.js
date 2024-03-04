@@ -43,7 +43,7 @@ function App() {
   return (
     <div className="app">
       <div className="screen">
-        <img src={Image} alt="image" />
+        <img src={Image}/>
         <h1>Register</h1>
 
         <label>
