@@ -9,13 +9,8 @@ import HomePage from "./components/HomePage.js";
 
 const App = () => {
   return (
-      <Router>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          { (
-            <>
-            </>
-          )}
           <Route
             path="/login"
             element={<LoginPage/>}
@@ -27,7 +22,6 @@ const App = () => {
           />
           <Route path="*" element={<Navigate to="/login" />} />
         </Routes>
-      </Router>
     );
   };
 
