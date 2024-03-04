@@ -1,6 +1,6 @@
 // App.jsx
 import React from "react";
-import { BrowserRouter as  Router, Routes, Route, Navigate} from "react-router-dom";
+import { BrowserRouter as  Routes, Route, Navigate} from "react-router-dom";
 import RegisterPage from "./components/RegisterPage.js";
 import LoginPage from "./components/LoginPage.js";
 import HomePage from "./components/HomePage.js";
